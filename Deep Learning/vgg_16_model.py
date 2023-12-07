@@ -112,4 +112,7 @@ from keras.models import load_model
 
 model.save('facefeatures_new_model.h5')
 
++++++++++++++++++++++++
+optimised added additional layers
+
 

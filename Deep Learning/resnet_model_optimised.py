@@ -64,7 +64,7 @@ test_set = test_datagen.flow_from_directory(valid_path,
 
 # Callbacks for early stopping and model checkpoint
 early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
-model_checkpoint = ModelCheckpoint('best_model.h5', save_best_only=True)
+model_checkpoint = ModelCheckpoint('best_resnet_model.h5', save_best_only=True)
 
 #generate model histroy
 model.summary()

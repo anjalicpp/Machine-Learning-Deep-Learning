@@ -23,6 +23,11 @@ resnet = ResNet50(input_shape=IMAGE_SIZE + [3], weights='imagenet', include_top=
 # Freeze all layers in the pre-trained model
 for layer in resnet.layers:
     layer.trainable = False
+    
+# useful for getting number of classes
+folders = glob('New_Dataset/DevanagariHandwrittenCharacterDataset/Train/*')
+print(len(folders))
+
 
 # Create a custom model on top of the pre-trained ResNet50
 x = Flatten()(resnet.output)
@@ -61,6 +66,9 @@ test_set = test_datagen.flow_from_directory(valid_path,
 early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
 model_checkpoint = ModelCheckpoint('best_model.h5', save_best_only=True)
 
+#generate model histroy
+model.summary()
+
 # Train the model
 history = model.fit_generator(
     training_set,
@@ -72,7 +80,14 @@ history = model.fit_generator(
 )
 
 # Save the final model
-model.save('facefeatures_resnet_model.h5')
+model.save('resnet_optimised_model.h5')
+# Evaluate the model on the test set
+final_loss, final_accuracy = model.evaluate(test_set, steps=len(test_set))
+
+# Print the final accuracy and loss
+print(f'Final Loss: {final_loss:.4f}')
+print(f'Final Accuracy: {final_accuracy * 100:.2f}%')
+
 
 # Plot training history
 plt.plot(history.history['loss'], label='train loss')

@@ -39,7 +39,7 @@ output = Dense(len(folders), activation='softmax')(x)
 model = Model(inputs=resnet.input, outputs=output)
 
 # Compile the model
-model.compile(optimizer=Adam(lr=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Data Augmentation
 train_datagen = ImageDataGenerator(
